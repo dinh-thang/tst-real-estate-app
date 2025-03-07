@@ -1,0 +1,26 @@
+[
+  {
+    "title": "test 2",
+    "location": "hanoi",
+    "price": "1000",
+    "type": "Apartment"
+  },
+  {
+    "title": "House 3",
+    "location": "Melb",
+    "price": "2000",
+    "type": "House"
+  },
+  {
+    "title": "house 1",
+    "location": "syd",
+    "price": "200",
+    "type": "Condo"
+  },
+  {
+    "title": "house 4",
+    "location": "au",
+    "price": "222",
+    "type": "House"
+  }
+]
