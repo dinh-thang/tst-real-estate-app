@@ -25,7 +25,7 @@ const Input: React.FC<InputProps> = ({
       name={name}
       value={value}
       onChange={onChange}
-      className={`border text-sm border-gray-200 rounded focus:bg-gray-100 focus:outline-0 p-2 ${className}`}
+      className={`border text-sm w-full bg-white border-gray-200 rounded p-2 ${className}`}
       placeholder={placeholder}
       ref={ref}
     />

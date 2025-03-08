@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { CircleUser } from "lucide-react";
 
-import GhostButton from "./buttons/GhostButton";
+import GhostButton from "./ui/buttons/GhostButton";
 
 const Header = () => {
   return (

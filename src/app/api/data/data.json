@@ -22,5 +22,11 @@
     "location": "au",
     "price": "222",
     "type": "House"
+  },
+  {
+    "title": "new property at melbourne",
+    "location": "Melbourne, Victoria, AUS",
+    "price": null,
+    "type": "Apartment"
   }
 ]

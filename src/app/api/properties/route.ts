@@ -38,11 +38,11 @@ export async function POST(request: NextRequest) {
       }
     );
   } catch (error) {
-    console.error("Error in POST handler:", error);
+    console.error("Error at POST /api/properties:", error);
     return new Response(
       JSON.stringify({ 
         message: "An error occurred", 
-        error: error instanceof Error ? error.message : String(error) 
+        error: error 
       }), 
       {
         status: 500,
@@ -54,14 +54,14 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest) {  
   try {
     const filePath = path.join(process.cwd(), "src", "app", "api", "data", "data.json");
     
     if (!fs.existsSync(filePath)) {
       return new Response(
         JSON.stringify({ 
-          message: "No data found",
+          message: "There is no data in data.json file",
           data: []
         }), 
         {
@@ -75,12 +75,11 @@ export async function GET(request: NextRequest) {
     
     const fileContent = fs.readFileSync(filePath, "utf8");
     const data = JSON.parse(fileContent);
+
+    
     
     return new Response(
-      JSON.stringify({ 
-        message: "Data retrieved successfully", 
-        data: data 
-      }), 
+      JSON.stringify(data), 
       {
         status: 200,
         headers: {
@@ -89,11 +88,12 @@ export async function GET(request: NextRequest) {
       }
     );
   } catch (error) {
-    console.error("Error in GET handler:", error);
+    console.error("Error in GET /api/properties:", error);
+
     return new Response(
       JSON.stringify({ 
         message: "An error occurred", 
-        error: error instanceof Error ? error.message : String(error) 
+        error: error 
       }), 
       {
         status: 500,
