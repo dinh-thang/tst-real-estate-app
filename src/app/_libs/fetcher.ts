@@ -17,8 +17,18 @@ export async function createProperty(property: Property) {
 }
 
 export async function fetchProperties(params: { location: string, minPrice: string, maxPrice: string, type: string }) {
-  const query = new URLSearchParams(params).toString();
-  const response = await fetch(`http://localhost:3000/api/properties?${query}`, {
+  const query = new URLSearchParams();
+
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== "") {
+      query.append(key, value);
+    }
+  });
+
+  const queryString = query.toString();
+  const url = queryString ? `http://localhost:3000/api/properties?${queryString}` : `http://localhost:3000/api/properties`;
+
+  const response = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"

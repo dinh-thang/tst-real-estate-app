@@ -2,12 +2,11 @@
 
 import { fetchProperties } from "@/app/_libs/fetcher";
 import { Property } from "@/app/_types";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import Card from "../ui/cards/Card";
 import { useSearchParams } from "next/navigation";
 
 const PropertiesContainer = () => {
-  const queryClient = useQueryClient();
   const searchParams = useSearchParams();
 
   const location = searchParams.get("location") || "";

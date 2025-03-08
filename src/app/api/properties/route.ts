@@ -90,19 +90,24 @@ export async function GET(request: NextRequest) {
         }
       );
     } else {
+      console.log("SEARCH_PARAMS:", searchParams.toString());
       let filterData = data;
 
       const location = searchParams.get("location");
       if (location) {
         filterData = filterData.filter((property: Property) => property.location.toLowerCase().includes(location.toLowerCase()));
+        console.log("FILTER_DATA_LOCATION:", filterData);
       }
 
       const minPrice = searchParams.get("minPrice");
       const maxPrice = searchParams.get("maxPrice");
+      console.log("MIN_PRICE:", minPrice);
+      console.log("MAX_PRICE:", maxPrice);
       if (minPrice) {
         filterData = filterData.filter((property: Property) =>
           property.price >= parseFloat(minPrice)
         );
+        
       }
     
       if (maxPrice) {

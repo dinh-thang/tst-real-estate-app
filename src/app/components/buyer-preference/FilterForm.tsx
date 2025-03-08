@@ -7,15 +7,15 @@ import Input from "../ui/forms/Input";
 import PrimaryButton from "../ui/buttons/PrimaryButton";
 import { useRouter, useSearchParams } from "next/navigation";
 
-interface FilterFormProps {
-
+export interface FilterFormProps {
 }
+
 
 export interface FilterForm {
   location: string;
   minPrice: number;
   maxPrice: number;
-  type: PropertyType;
+  type: PropertyType | "";
 }
 
 const FilterForm: React.FC<FilterFormProps> = () => {
@@ -24,23 +24,18 @@ const FilterForm: React.FC<FilterFormProps> = () => {
     handleSubmit,
     formState: { errors }
   } = useForm<FilterForm>();
-
   const router = useRouter();
-  const searchParams = useSearchParams();
   
-
   const onSubmit: SubmitHandler<FilterForm> = (data) => {
-    const params = new URLSearchParams(searchParams.toString());
-
+    const params = new URLSearchParams();
+    
     Object.entries(data).forEach(([key, value]) => {
       if (value) {
         params.set(key, value.toString());
-      } else {
-        params.delete(key);
-      }
+      } 
     });
+    console.log("PARAMS:", params.toString());
 
-    // Update the URL with new query params
     router.push(`?${params.toString()}`);
   };
   
@@ -58,25 +53,32 @@ const FilterForm: React.FC<FilterFormProps> = () => {
           {...register("location")}
         />
 
-        <Input
-          label="Min Price"
-          placeholder="Min Price"
-          {...register("minPrice")}
-        />
+        <div>
+          <Input
+            label="Min Price"
+            placeholder="Min Price"
+            {...register("minPrice", {valueAsNumber: true})}
+          />
+          {errors.minPrice && <span className="text-red-500">This field is required</span>}
+        </div>
 
-        <Input
-          label="Max Price"
-          placeholder="Max Price"
-          {...register("maxPrice")}
-        />
+        <div>
+          <Input
+            label="Max Price"
+            placeholder="Max Price"
+            {...register("maxPrice", {valueAsNumber: true})}
+          />
+          {errors.maxPrice && <span className="text-red-500">This field is required</span>}
+        </div>
 
         <select 
-          className="w-full text-sm rounded text-black/50 border border-gray-200 focus:outline-0 p-2" 
-          {...register("type", {required: true})}
+          className="w-full bg-white text-sm rounded border border-gray-200 focus:outline-0 p-2" 
+          {...register("type")}
+          defaultValue={""}
         >
-          <option disabled value="">Select Property Type</option>
+          <option className="text-black/50" value="">None</option>
           {Object.values(PropertyType).map((type) => (
-            <option key={type} value={type}>{type}</option>
+            <option className="text-black" key={type} value={type}>{type}</option>
           ))}          
         </select>
 

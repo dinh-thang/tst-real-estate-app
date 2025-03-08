@@ -26,7 +26,13 @@
   {
     "title": "new property at melbourne",
     "location": "Melbourne, Victoria, AUS",
-    "price": null,
+    "price": 1001,
     "type": "Apartment"
+  },
+  {
+    "title": "title 5",
+    "location": "mel",
+    "price": 200,
+    "type": "Condo"
   }
 ]
