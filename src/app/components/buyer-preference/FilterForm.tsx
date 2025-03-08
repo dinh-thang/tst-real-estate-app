@@ -1,11 +1,11 @@
 "use client";
 
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Property, PropertyType } from "@/app/_types";
+import { PropertyType } from "@/app/_types";
 
 import Input from "../ui/forms/Input";
 import PrimaryButton from "../ui/buttons/PrimaryButton";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export interface FilterFormProps {
 }
@@ -34,7 +34,6 @@ const FilterForm: React.FC<FilterFormProps> = () => {
         params.set(key, value.toString());
       } 
     });
-    console.log("PARAMS:", params.toString());
 
     router.push(`?${params.toString()}`);
   };
