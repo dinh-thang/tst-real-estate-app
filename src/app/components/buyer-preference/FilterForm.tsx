@@ -5,6 +5,7 @@ import { Property, PropertyType } from "@/app/_types";
 
 import Input from "../ui/forms/Input";
 import PrimaryButton from "../ui/buttons/PrimaryButton";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface FilterFormProps {
 
@@ -24,8 +25,23 @@ const FilterForm: React.FC<FilterFormProps> = () => {
     formState: { errors }
   } = useForm<FilterForm>();
 
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  
+
   const onSubmit: SubmitHandler<FilterForm> = (data) => {
-    console.log(data);
+    const params = new URLSearchParams(searchParams.toString());
+
+    Object.entries(data).forEach(([key, value]) => {
+      if (value) {
+        params.set(key, value.toString());
+      } else {
+        params.delete(key);
+      }
+    });
+
+    // Update the URL with new query params
+    router.push(`?${params.toString()}`);
   };
   
   return (
