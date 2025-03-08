@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import path from "path";
 import fs from "fs";
+import { Property } from "@/app/_types";
 
 export async function POST(request: NextRequest) {
   try {
@@ -76,17 +77,56 @@ export async function GET(request: NextRequest) {
     const fileContent = fs.readFileSync(filePath, "utf8");
     const data = JSON.parse(fileContent);
 
-    
-    
-    return new Response(
-      JSON.stringify(data), 
-      {
-        status: 200,
-        headers: {
-          "Content-Type": "application/json"
+    const searchParams = request.nextUrl.searchParams;
+
+    if (searchParams.toString() === "") {
+      return new Response(
+        JSON.stringify(data), 
+        {
+          status: 200,
+          headers: {
+            "Content-Type": "application/json"
+          }
         }
+      );
+    } else {
+      let filterData = data;
+
+      const location = searchParams.get("location");
+      if (location) {
+        filterData = filterData.filter((property: Property) => property.location.toLowerCase().includes(location.toLowerCase()));
       }
-    );
+
+      const minPrice = searchParams.get("minPrice");
+      const maxPrice = searchParams.get("maxPrice");
+      if (minPrice) {
+        filterData = filterData.filter((property: Property) =>
+          property.price >= parseFloat(minPrice)
+        );
+      }
+    
+      if (maxPrice) {
+        filterData = filterData.filter((property: Property) =>
+          property.price <= parseFloat(maxPrice)
+        );
+      }
+    
+      const type = searchParams.get("type");
+      if (type) {
+        filterData = filterData.filter((property: Property) => property.type.toLowerCase() === type.toLowerCase());
+      }
+
+      return new Response(
+        JSON.stringify(filterData), 
+        {
+          status: 200,
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      );
+    }
+    
   } catch (error) {
     console.error("Error in GET /api/properties:", error);
 

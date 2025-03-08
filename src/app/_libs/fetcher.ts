@@ -16,8 +16,9 @@ export async function createProperty(property: Property) {
   return response.json();
 }
 
-export async function fetchProperties() {
-  const response = await fetch("http://localhost:3000/api/properties", {
+export async function fetchProperties(params: { location: string, minPrice: string, maxPrice: string, type: string }) {
+  const query = new URLSearchParams(params).toString();
+  const response = await fetch(`http://localhost:3000/api/properties?${query}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"

@@ -1,7 +1,7 @@
 export interface CardProps {
   children?: React.ReactNode;
   className?: string;
-  key?: string;
+  key?: number;
 }
 
 
